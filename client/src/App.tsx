@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className='App d-flex flex-row w-100'>
-      <TagsFilter />
+      <TagsFilter socket={socket} />
       <Chat messagesReceived={messagesReceived} socket={socket} />
     </div>
   )

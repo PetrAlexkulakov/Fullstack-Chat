@@ -7,6 +7,7 @@ const Chat = ({ messagesReceived, socket }: { messagesReceived: string[], socket
 
   const sendMessage = () => {
     socket.emit("send_message", { message })
+    setMessage('')
   }
 
   return (
@@ -20,6 +21,7 @@ const Chat = ({ messagesReceived, socket }: { messagesReceived: string[], socket
             </div>
             <div className='border border-5 border-primary m-3 p-2'>
                 <input type="text" placeholder='Message...' className='border border-success w-75' 
+                    value={message}
                     onChange={(e) => { setMessage(e.target.value) }} />
                 <button className='border border-success' onClick={sendMessage}>Send Message</button>
             </div>

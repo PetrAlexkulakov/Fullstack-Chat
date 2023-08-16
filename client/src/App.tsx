@@ -1,15 +1,12 @@
-import './App.css'
+import './App.scss'
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react'
+import Chat from './components/chat';
+import TagsFilter from './components/tagsFilter';
 
-const socket = io("http://localhost:3001")
 function App() {
-  const [message, setMessage] = useState('');
-  const [messagesReceived, setMessagesReceived] = useState<string[]>([])//TODO надо создать бд и там по времени присылать сообщения по одному
-
-  const sendMessage = () => {
-    socket.emit("send_message", { message })
-  }
+  const [messagesReceived, setMessagesReceived] = useState<string[]>([])
+  const socket = io("http://localhost:3001")
 
   useEffect(() => {
     const receiveMessageHandler = (data: { message: string; }) => {
@@ -24,12 +21,9 @@ function App() {
   }, []);
 
   return (
-    <div className='App'>
-      <input type="text" placeholder='Message...' onChange={(e) => { setMessage(e.target.value) }} />
-      <button onClick={sendMessage}>Send Message</button>
-      {messagesReceived.map((message, index) => {
-        return(<div key={index}>{message}</div>)
-      })}
+    <div className='App d-flex flex-row w-100'>
+      <TagsFilter />
+      <Chat messagesReceived={messagesReceived} socket={socket} />
     </div>
   )
 }

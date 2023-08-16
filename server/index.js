@@ -11,7 +11,8 @@ const server = http.createServer(app)
 
 const db = require('./models')
 
-const messagesRouter = require('./routes/Messages')
+const messagesRouter = require('./routes/Messages');
+const Tags = require('./models/Tags');
 app.use("/messages", messagesRouter)
 
 const io = new Server(server, {
@@ -32,13 +33,21 @@ io.on("connection", async (socket) => {
         });
         const tags = findAllTags(data.message)
         tags.forEach(async (tag) => {
-            const newTag = await db.Tags.create({
-                tagName: tag
-            })
-            await db.MessageTag.create({
-                messageId: newMessage.id,
-                id: newTag.id
-            })
+            const dbTag = await db.Tags.findOne({ where: { tagName: tag }})
+            if (!dbTag){
+                const newTag = await db.Tags.create({
+                    tagName: tag
+                })
+                await db.MessageTag.create({
+                    messageId: newMessage.id,
+                    tagId: newTag.id
+                })
+            } else {
+                await db.MessageTag.create({
+                    messageId: newMessage.id,
+                    tagId: dbTag.id
+                })
+            }
         })
         io.emit("receive_message", data)
     })

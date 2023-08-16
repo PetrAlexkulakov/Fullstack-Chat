@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
               key: 'id',
             },
           },
-        id: {
+        tagId: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             references: {
@@ -17,4 +17,4 @@ module.exports = (sequelize, DataTypes) => {
         },
     })
     return MessageTag 
-}
+} //#1064 - You have an error in SQL SyntaxError; check the manual that corresponds to your MySQL server version for the tight syntax to use '' at line 1

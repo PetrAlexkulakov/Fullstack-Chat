@@ -20,8 +20,16 @@ const io = new Server(server, {
     }
 })
 
-io.on("connection", (socket) => {
-    socket.on("send_message", (data) => {
+io.on("connection", async (socket) => {
+    const messages = await db.Messages.findAll();
+    messages.forEach(message => {
+        socket.emit("receive_message", message);
+    });
+
+    socket.on("send_message", async (data) => {
+        const newMessage = await db.Messages.create({
+            message: data.message
+        });
         io.emit("receive_message", data)
         // socket.broadcast.emit("receive_message", data)
     })

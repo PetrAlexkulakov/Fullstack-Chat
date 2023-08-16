@@ -30,8 +30,17 @@ io.on("connection", async (socket) => {
         const newMessage = await db.Messages.create({
             message: data.message
         });
+        const tags = findAllTags(data.message)
+        tags.forEach(async (tag) => {
+            const newTag = await db.Tags.create({
+                tagName: tag
+            })
+            await db.MessageTag.create({
+                messageId: newMessage.id,
+                id: newTag.id
+            })
+        })
         io.emit("receive_message", data)
-        // socket.broadcast.emit("receive_message", data)
     })
 })
 
@@ -42,4 +51,16 @@ db.sequelize.sync().then(() => {
 }).catch((err) => {
     console.error(err)
 })
+
+function findAllTags(text) {
+    const regex = /#(\w+)/g;
+    const tags = [];
+    let match;
+
+    while ((match = regex.exec(text))) {
+        tags.push(match[1]);
+    }
+
+    return tags
+}
     

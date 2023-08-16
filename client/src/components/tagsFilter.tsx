@@ -1,5 +1,3 @@
-
-
 const TagsFilter = () => {
   return (
     <div className="w-100">

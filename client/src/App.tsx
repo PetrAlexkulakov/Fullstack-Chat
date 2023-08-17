@@ -12,8 +12,15 @@ function App() {
     const receiveMessageHandler = (data: { message: string; }) => {
       setMessagesReceived((prevMessages) => [...prevMessages, data.message]);
     };
+    const receiveMessagesHandler = (data: { message: string; }[]) => {
+      setMessagesReceived(data.map((elem) => {
+        return elem.message
+      }))
+    };
 
     socket.on("receive_message", receiveMessageHandler);
+
+    socket.on("receive_messages", receiveMessagesHandler)
 
     return () => {
       socket.off("receive_message", receiveMessageHandler);

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 
+
+const TagsFilter = ({ socket, tags, setTags }: 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TagsFilter = ({ socket }: { socket: Socket<any, any> }) => {
+  { socket: Socket<any, any>, tags: string[], setTags: React.Dispatch<React.SetStateAction<string[]>> }) => {
   const [tag, setTag] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
 
   const sendTag = () => {
     const receiveTagsHandler = (tag: string) => {
-      setTags((prevTags) => [...prevTags, tag])
-      socket.emit("send_tags", { tags: tags.concat(tag).join(';') })
+      const improvedTag = tag.replace(/#/ig, '')
+      setTags((prevTags) => [...prevTags, improvedTag])
+      socket.emit("send_tags", { tags: tags.concat(improvedTag).join(';') })
     };
     receiveTagsHandler(tag)
     setTag('')

@@ -13,13 +13,13 @@ function App() {
   const receiveMessageHandler = (data: { message: string; }) => {
     const dataTags = findAllTags(data.message)
     if (tags.some(element => dataTags.includes(element)) || dataTags.length === 0) {
-      setMessagesReceived((prevMessages) => [...prevMessages, data.message]);//? или это и ещё тэги ебучие
+      setMessagesReceived((prevMessages) => [...prevMessages, data.message]);
     }
   };
 
   const receiveMessagesHandler = (data: { message: string; createdAt: string }[]) => {
     const receivedMessages = data.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()).map(elem => elem.message);
-    setMessagesReceived(receivedMessages);//! сука опять это гавно не работает
+    setMessagesReceived(receivedMessages);
   };
 
   useEffect(() => {

@@ -64,9 +64,11 @@ io.on("connection", async (socket) => {
                         }
                     }
                 }]
-            })).map((message) => message.dataValues);
+            })).concat((await db.Messages.findAll())
+            .filter((message) => findAllTags(message.dataValues.message).length === 0));
         } else {
-            messages = await db.Messages.findAll();
+            messages = (await db.Messages.findAll())
+                .filter((message) => findAllTags(message.dataValues.message).length === 0);
         }
         socket.emit("receive_messages", messages);
     })

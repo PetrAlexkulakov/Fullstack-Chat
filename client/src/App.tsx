@@ -12,10 +12,9 @@ function App() {
     const receiveMessageHandler = (data: { message: string; }) => {
       setMessagesReceived((prevMessages) => [...prevMessages, data.message]);
     };
-    const receiveMessagesHandler = (data: { message: string; }[]) => { //! эта хуйня тупо не срабатывает
-      const receivedMessages = data.map(elem => elem.message);
+    const receiveMessagesHandler = (data: { message: string; createdAt: string }[]) => {
+      const receivedMessages = data.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()).map(elem => elem.message);
       setMessagesReceived(receivedMessages);
-    
     };
 
     socket.on("receive_message", receiveMessageHandler);

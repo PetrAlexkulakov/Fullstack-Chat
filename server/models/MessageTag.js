@@ -16,5 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
     })
-    return MessageTag 
-} //#1064 - You have an error in SQL SyntaxError; check the manual that corresponds to your MySQL server version for the tight syntax to use '' at line 1
+    MessageTag.associate = (models) => {
+        MessageTag.belongsTo(models.Messages, { foreignKey: 'messageId' });
+        MessageTag.belongsTo(models.Tags, { foreignKey: 'tagId' });
+    };
+
+    return MessageTag;
+} 

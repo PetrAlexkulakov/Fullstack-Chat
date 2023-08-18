@@ -22,11 +22,8 @@ const io = new Server(server, {
 })
 
 io.on("connection", async (socket) => {
-    const messages = await db.Messages.findAll();
-    socket.emit("receive_messages", messages)
-    // messages.forEach(message => {
-    //     socket.emit("receive_message", message);
-    // });
+    // const messages = await db.Messages.findAll();
+    // socket.emit("receive_messages", messages)
 
     socket.on("send_message", async (data) => {
         const newMessage = await db.Messages.create({
@@ -51,6 +48,27 @@ io.on("connection", async (socket) => {
             }
         })
         io.emit("receive_message", data)
+    })
+
+    socket.on("send_tags", async (data) => {
+        const tags = data.tags.split(';');
+        
+        let messages
+        if (data.tags !== '') {
+            messages = (await db.Messages.findAll({
+                include: [{
+                    model: db.Tags,
+                    where: {
+                        tagName: {
+                            [db.Sequelize.Op.in]: tags
+                        }
+                    }
+                }]
+            })).map((message) => message.dataValues);
+        } else {
+            messages = await db.Messages.findAll();
+        }
+        socket.emit("receive_messages", messages);
     })
 })
 

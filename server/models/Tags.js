@@ -5,5 +5,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     })
-    return Tags
+    Tags.associate = (models) => {
+        Tags.belongsToMany(models.Messages, { through: models.MessageTag, foreignKey: 'tagId' });
+    };
+
+    return Tags;
 }

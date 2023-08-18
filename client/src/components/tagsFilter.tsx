@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,11 +7,18 @@ const TagsFilter = ({ socket }: { socket: Socket<any, any> }) => {
   const [tags, setTags] = useState<string[]>([]);
 
   const sendTag = () => {
-    const improvedTag = `#${tag}`
-    socket.emit("send_tag", { improvedTag }) //? надо ли это делать в реальном времени?
-    setTags([...tags, improvedTag])
+    const receiveTagsHandler = (tag: string) => {
+      setTags((prevTags) => [...prevTags, tag])
+      socket.emit("send_tags", { tags: tags.concat(tag).join(';') })
+    };
+    receiveTagsHandler(tag)
     setTag('')
   }
+
+  useEffect(() => {
+    socket.emit("send_tags", { tags: '' })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   return (
     <div className="w-100">

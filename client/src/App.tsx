@@ -12,10 +12,10 @@ function App() {
     const receiveMessageHandler = (data: { message: string; }) => {
       setMessagesReceived((prevMessages) => [...prevMessages, data.message]);
     };
-    const receiveMessagesHandler = (data: { message: string; }[]) => {
-      setMessagesReceived(data.map((elem) => {
-        return elem.message
-      }))
+    const receiveMessagesHandler = (data: { message: string; }[]) => { //! эта хуйня тупо не срабатывает
+      const receivedMessages = data.map(elem => elem.message);
+      setMessagesReceived(receivedMessages);
+    
     };
 
     socket.on("receive_message", receiveMessageHandler);
@@ -24,8 +24,10 @@ function App() {
 
     return () => {
       socket.off("receive_message", receiveMessageHandler);
+      socket.off("receive_messages", receiveMessagesHandler);
     };
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
 
   return (
     <div className='App d-flex flex-row w-100'>

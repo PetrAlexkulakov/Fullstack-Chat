@@ -30,8 +30,8 @@ function App() {
 
     return () => {
       socket.off("receive_message", receiveMessageHandler);
-      // socket.off("receive_messages", receiveMessagesHandler);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   return (

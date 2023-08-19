@@ -1,0 +1,1 @@
+export const baseURL = "https://backend-chat-oj2b.onrender.com"

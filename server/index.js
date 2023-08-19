@@ -13,6 +13,8 @@ const db = require('./models')
 
 const messagesRouter = require('./routes/Messages');
 const Tags = require('./models/Tags');
+const tagRouter = require('./routes/Tags')
+app.use("/tags", tagRouter)
 app.use("/messages", messagesRouter)
 
 const io = new Server(server, {

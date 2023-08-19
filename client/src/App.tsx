@@ -1,4 +1,5 @@
 import './App.scss'
+import { baseURL } from './shared/baseURL';
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react'
 import Chat from './components/chat';
@@ -7,7 +8,7 @@ import { findAllTags } from './shared/findAllTags';
 
 function App() {
   const [messagesReceived, setMessagesReceived] = useState<string[]>([])
-  const socket = io("http://localhost:3001")
+  const socket = io(baseURL)
   const [tags, setTags] = useState<string[]>([]);
 
   const receiveMessageHandler = (data: { message: string; }) => {

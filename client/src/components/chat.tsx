@@ -20,9 +20,17 @@ const Chat = ({ messagesReceived, socket }: { messagesReceived: string[], socket
                 })}
             </div>
             <div className='border border-5 border-primary m-3 p-2 flex-nowrap'>
-                <input type="text" placeholder='Message...' className='border border-success w-50' 
+                <input type="text" placeholder='Message...' 
+                    className='border border-success w-50' 
                     value={message}
-                    onChange={(e) => { setMessage(e.target.value) }} />
+                    onChange={(e) => { setMessage(e.target.value) }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendMessage();
+                      }
+                    }}
+                    />
                 <button className='border border-success ms-3' onClick={sendMessage}>Send Message</button>
             </div>
         </div>

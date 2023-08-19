@@ -83,8 +83,9 @@ const TagsFilter = ({ socket, tags, setTags }:
                     )
                 })}
             </div>
-            <div className='border border-5 border-primary m-3 p-2'>
+            <div className='border border-5 border-primary m-3 p-2 d-flex flex-nowrap justify-content-center'>
                 <AsyncCreatableSelect
+                  className="w-50"
                   cacheOptions
                   defaultOptions
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,6 +93,12 @@ const TagsFilter = ({ socket, tags, setTags }:
                   value={tag !== null ? { tagName: tag, label: tag } : null}
                   onChange={handleSelectChange}
                   onCreateOption={(newTag) => handleCreateTag(newTag)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      sendTag();
+                    }
+                  }}
                 />
                 <button className='border border-success ms-3' onClick={sendTag}>Send Tag</button>
             </div>

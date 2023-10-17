@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
-import { baseURL } from "../shared/baseURL";
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import axios from "axios";
 
 const TagsFilter = ({ socket, tags, setTags }: 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { socket: Socket<any, any>, tags: string[], setTags: React.Dispatch<React.SetStateAction<string[]>> }) => {
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
   const [tag, setTag] = useState<string | null>(null);
 
   const handleSelectChange = (selectedOption: { tagName: string } | null) => {
@@ -85,7 +85,7 @@ const TagsFilter = ({ socket, tags, setTags }:
             </div>
             <div className='border border-5 border-primary m-3 p-2 d-flex flex-nowrap justify-content-center'>
                 <AsyncCreatableSelect
-                  className="w-50"
+                  className="w-75"
                   cacheOptions
                   defaultOptions
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any

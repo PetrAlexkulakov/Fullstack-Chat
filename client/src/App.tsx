@@ -1,5 +1,4 @@
 import './App.scss'
-import { baseURL } from './shared/baseURL';
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react'
 import Chat from './components/chat';
@@ -8,6 +7,7 @@ import { findAllTags } from './shared/findAllTags';
 
 function App() {
   const [messagesReceived, setMessagesReceived] = useState<string[]>([])
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
   const socket = io(baseURL)
   const [tags, setTags] = useState<string[]>([]);
 

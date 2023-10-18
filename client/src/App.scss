@@ -2,15 +2,40 @@
   min-height: 100%;
   overflow: hidden;
   width: 100%;
+  background-image: url('./assets/2258.jpg');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h3 {
+  background-color: white;
+  margin: 0;
+  padding-bottom: 0.5rem;
 }
 
 .App {
-  min-height: 500px;
   text-align: center;
 }
 
 .chat {
-  height: 90%;
+  height: 86%;
+}
+
+.message {
+  width: min-content;
+  min-width: 30%;
+  padding: 0.3rem 1rem;
+  background-color: white;
+  border: 1px solid black;
+  margin-bottom: 0.3rem;
+  margin-right: 1rem;
+  text-align: left;
+}
+
+.input-wrapper{
+  background-color: white;
+  margin: 0 !important;
 }
 
 .btn-delete {

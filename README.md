@@ -1,4 +1,4 @@
-# Fullstack-Chat
+# Fullstack Chat
 
 <a href="https://fullstack-chat.onrender.com/">Deploy</a>
 

@@ -12,14 +12,14 @@ const Chat = ({ messagesReceived, socket }: { messagesReceived: string[], socket
 
   return (
     <div className="w-100">
-        <h3>Messages:</h3>
+        <h3>Table Of Messages:</h3>
         <div className='chat d-flex flex-column justify-content-between border border-success w-100'>
-            <div className='d-flex flex-column justify-content-start' style={{ overflowY: 'auto' }}>
+            <div className='d-flex flex-column align-items-end justify-content-start' style={{ overflowY: 'auto' }}>
                 {messagesReceived.map((message, index) => {
-                    return(<div key={index}>{message}</div>)
+                    return(<div className='message' key={index}>{message}</div>)
                 })}
             </div>
-            <div className='border border-5 border-primary m-3 p-2 flex-nowrap'>
+            <div className='input-wrapper border border-5 border-primary m-3 p-2 flex-nowrap'>
                 <input type="text" placeholder='Message...' 
                     className='border border-success w-50' 
                     value={message}
